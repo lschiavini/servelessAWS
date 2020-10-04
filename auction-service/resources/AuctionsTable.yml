@@ -6,6 +6,20 @@ AuctionsTable:
     AttributeDefinitions:
       - AttributeName: id
         AttributeType: S #S for string
-    KeySchema:
+      - AttributeName: status
+        AttributeType: S #S for string
+      - AttributeName: endingAt
+        AttributeType: S #S for string
+      
+    KeySchema: # primary index
       - AttributeName: id
         KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: statusAndEndDate
+        KeySchema: 
+        - AttributeName: status
+          KeyType: HASH
+        - AttributeName: endingAt
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
